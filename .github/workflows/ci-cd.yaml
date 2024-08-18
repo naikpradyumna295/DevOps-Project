@@ -43,6 +43,7 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}  # Base64 encoded kubeconfig
         run: |
+          mkdir -p ~/.kube
           echo "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
           sudo kubectl apply -f k8s/deployment.yaml
           sudo kubectl apply -f k8s/service.yaml
