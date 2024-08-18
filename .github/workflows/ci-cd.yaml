@@ -23,7 +23,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: your-dockerhub-username/wisecow:latest
+        tags: pradyumna295/wisecow:latest
 
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
