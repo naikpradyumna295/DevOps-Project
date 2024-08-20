@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: wisecow
 spec:
-  selector:
-    app: wisecow
-  ports:
-  - port: 80
-    targetPort: 8080
   type: LoadBalancer
+  ports:
+    - port: 80         # External port to access your service
+      targetPort: 4499 # Internal port where your application is listening
+  selector:
+    app: wisecow      # Make sure this matches the label of your pods
+
