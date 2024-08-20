@@ -34,17 +34,22 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Kubernetes
+      - name: Set up Kubernetes CLI
         uses: azure/setup-kubectl@v1
         with:
           kubectl-version: 'latest'
 
-      - name: Deploy to Kubernetes
+      - name: Set up kubeconfig
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}  # Base64 encoded kubeconfig
         run: |
           mkdir -p ~/.kube
           echo "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
-          sudo kubectl apply -f k8s/deployment.yaml
-          sudo kubectl apply -f k8s/service.yaml
+          # Verify kubeconfig setup
+          kubectl config view
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml --v=9
+          kubectl apply -f k8s/service.yaml --v=9
 
